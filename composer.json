@@ -1,0 +1,27 @@
+{
+  "name": "ewll/mailer-bundle",
+  "description": "Mailer Bundle",
+  "type": "symfony-bundle",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Maksim Salamakhin",
+      "email": "343604@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.3",
+    "ext-json": "*",
+    "ewll/db-bundle": "^2.11"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ewll\\MailerBundle\\": ""
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.x-dev"
+    }
+  }
+}
