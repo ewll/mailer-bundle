@@ -7,5 +7,4 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class EwllMailerBundle extends Bundle
 {
-
 }

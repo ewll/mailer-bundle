@@ -1,0 +1,17 @@
+services:
+
+  Ewll\MailerBundle\Mailer:
+    arguments:
+      - '@Ewll\MysqlMessageBrokerBundle\MessageBroker'
+      - '@ewll.db.repository-provider'
+      - '@translator'
+      - '@twig'
+      - '@logger'
+      - '%ewll_mailer.host%'
+      - '%ewll_mailer.port%'
+      - '%ewll_mailer.secure%'
+      - '%ewll_mailer.user%'
+      - '%ewll_mailer.pass%'
+      - '%ewll_mailer.smtp_auth%'
+      - '%ewll_mailer.sender_email%'
+      - '%ewll_mailer.sender_name%'

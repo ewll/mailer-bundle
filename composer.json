@@ -12,7 +12,13 @@
   "require": {
     "php": "^7.3",
     "ext-json": "*",
-    "ewll/db-bundle": "^2.11"
+    "ewll/db-bundle": "^2.11",
+    "symfony/twig-bundle": "^4.3",
+    "symfony/monolog-bundle": "^3.4",
+    "phpmailer/phpmailer": "^6.0",
+    "symfony/translation": "^4.3",
+    "symfony/framework-bundle": "^4.3",
+    "ewll/mysql-message-broker-bundle": "^0.2"
   },
   "autoload": {
     "psr-4": {
