@@ -2,7 +2,7 @@
 
 use Ewll\DBBundle\Migration\MigrationInterface;
 
-class Migration20190504163700 implements MigrationInterface
+class Migration20190829023600 implements MigrationInterface
 {
     public function getDescription(): string
     {
