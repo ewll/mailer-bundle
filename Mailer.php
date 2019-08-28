@@ -13,7 +13,8 @@ use Twig\Environment;
 
 class Mailer
 {
-    const LETTER_NAME_CONFIRMATION = 'emailConfirmation';
+    const LETTER_NAME_CONFIRMATION = 'letterEmailConfirmation';
+    const QUEUE_NAME = 'letter';
 
     private $messageBroker;
     private $phpMailer;
@@ -83,9 +84,9 @@ class Mailer
         $letter = Letter::create(
             $userId,
             $user->email,
-            $this->translator->trans("letter-subject-{$templateName}", [], 'site'),
+            $this->translator->trans('subject', [], $templateName),
             $this->templating->render(
-                "letter/{$templateName}.html.twig",
+                "{$templateName}.html.twig",
                 $templateData
             )
         );
@@ -101,9 +102,9 @@ class Mailer
         $letter = Letter::create(
             null,
             $email,
-            $this->translator->trans("letter-subject-{$templateName}", [], 'site'),
+            $this->translator->trans('subject', [], $templateName),
             $this->templating->render(
-                "letter/{$templateName}.html.twig",
+                "{$templateName}.html.twig",
                 $templateData
             )
         );
@@ -113,7 +114,7 @@ class Mailer
 
     public function toQueue(int $letterId, int $try = 1, int $delay = 5): void
     {
-        $this->messageBroker->createMessage(MessageBroker::QUEUE_MAIL_NAME, [
+        $this->messageBroker->createMessage(self::QUEUE_NAME, [
             'letterId' => $letterId,
             'try' => $try,
         ], $delay);

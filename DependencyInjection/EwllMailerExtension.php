@@ -19,7 +19,7 @@ class EwllMailerExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yaml');
+        $loader->load('config.yaml');
 
         $container->setParameter('ewll_mailer.host', $config['host']);
         $container->setParameter('ewll_mailer.port', $config['port']);

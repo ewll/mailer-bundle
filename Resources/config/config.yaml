@@ -15,3 +15,10 @@ services:
       - '%ewll_mailer.smtp_auth%'
       - '%ewll_mailer.sender_email%'
       - '%ewll_mailer.sender_name%'
+
+  Ewll\MailerBundle\SendLetterDaemon:
+    parent: Ewll\MysqlMessageBrokerBundle\AbstractDaemon
+    arguments: ['@logger', '@Ewll\MysqlMessageBrokerBundle\MessageBroker', '@Ewll\MailerBundle\Mailer']
+    tags:
+      - { name: 'console.command', command: 'ewll:mailer:daemon:send-letter' }
+      - { name: monolog.logger, channel: mailer }
