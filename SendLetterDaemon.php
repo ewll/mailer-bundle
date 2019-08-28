@@ -1,7 +1,7 @@
 <?php namespace Ewll\MailerBundle;
 
-use App\Entity\Letter;
-use Ewll\MailerBundle\Exception\CannotSendEmailException;
+use Ewll\MailerBundle\Entity\Letter;
+use Ewll\MailerBundle\Exception\CannotSendLetterException;
 use Ewll\MysqlMessageBrokerBundle\AbstractDaemon;
 use Ewll\MysqlMessageBrokerBundle\MessageBroker;
 use Symfony\Bridge\Monolog\Logger;
@@ -28,7 +28,7 @@ class SendLetterDaemon extends AbstractDaemon
 
     protected function do(InputInterface $input, OutputInterface $output)
     {
-        $message = $this->messageBroker->getMessage(MessageBroker::QUEUE_MAIL_NAME);
+        $message = $this->messageBroker->getMessage(Mailer::QUEUE_NAME);
         $letterId = $message['letterId'];
         $this->logger->info("Sending letter #{$letterId}");
         /** @var Letter $letter */
@@ -39,7 +39,7 @@ class SendLetterDaemon extends AbstractDaemon
                 $letter->statusId = Letter::STATUS_ID_SENT;
                 $this->repositoryProvider->get(Letter::class)->update($letter, ['statusId']);
                 $this->logger->info("Letter #{$letter->id} sent");
-            } catch (CannotSendEmailException $e) {
+            } catch (CannotSendLetterException $e) {
                 $try = $message['try'];
                 if ($try <= 3) {
                     $try++;
