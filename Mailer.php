@@ -2,7 +2,7 @@
 
 use Ewll\MailerBundle\Entity\Letter;
 use Ewll\MailerBundle\Exception\CannotSendLetterException;
-use Ewll\UserBundle\User;
+use Ewll\UserBundle\Entity\User;
 use Ewll\MysqlMessageBrokerBundle\MessageBroker;
 use Ewll\DBBundle\Repository\RepositoryProvider;
 use PHPMailer\PHPMailer\Exception;
@@ -13,7 +13,6 @@ use Twig\Environment;
 
 class Mailer
 {
-    const LETTER_NAME_CONFIRMATION = 'letterEmailConfirmation';
     const QUEUE_NAME = 'letter';
 
     private $messageBroker;
@@ -68,13 +67,11 @@ class Mailer
 
     // Creates any letter for confirmed email and confirmation letter only for unconfirmed email
     public function createForUser(
-        int $userId,
-        string $templateName,
-        array $templateData
+        User $user,
+        Template $template,
+        bool $checkEmailConfirmation = true
     ): void {
-        /** @var User $user */
-        $user = $this->repositoryProvider->get(User::class)->findById($userId);
-        if (!$user->isEmailConfirmed && $templateName !== self::LETTER_NAME_CONFIRMATION) {
+        if ($checkEmailConfirmation && !$user->isEmailConfirmed) {
             $this->logger->critical(
                 'Letter is not created! Only confirmation letters for unconfirmed emails are allowed'
             );
@@ -82,12 +79,12 @@ class Mailer
             return;
         }
         $letter = Letter::create(
-            $userId,
+            $user->id,
             $user->email,
-            $this->translator->trans('subject', [], $templateName),
+            $this->translator->trans('subject', [], $template->getName()),
             $this->templating->render(
-                "{$templateName}.html.twig",
-                $templateData
+                "@{$template->getBundle()}/letter/{$template->getName()}.html.twig",
+                $template->getData()
             )
         );
         $this->repositoryProvider->get(Letter::class)->create($letter);
@@ -96,16 +93,15 @@ class Mailer
 
     public function create(
         string $email,
-        string $templateName,
-        array $templateData
+        Template $template
     ): void {
         $letter = Letter::create(
             null,
             $email,
-            $this->translator->trans('subject', [], $templateName),
+            $this->translator->trans('subject', [], $template->getName()),
             $this->templating->render(
-                "{$templateName}.html.twig",
-                $templateData
+                "@{$template->getBundle()}/letter/{$template->getName()}.html.twig",
+                $template->getData()
             )
         );
         $this->repositoryProvider->get(Letter::class)->create($letter);
