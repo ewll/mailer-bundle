@@ -13,12 +13,12 @@
     "php": "^7.3",
     "ext-json": "*",
     "ewll/db-bundle": "^2.11",
-    "symfony/twig-bundle": "^4.3",
+    "symfony/twig-bundle": "^5",
     "symfony/monolog-bundle": "^3.4",
     "phpmailer/phpmailer": "^6.0",
-    "symfony/translation": "^4.3",
-    "symfony/framework-bundle": "^4.3",
-    "ewll/mysql-message-broker-bundle": "^1.0",
+    "symfony/translation": "^5",
+    "symfony/framework-bundle": "^5",
+    "ewll/mysql-message-broker-bundle": "^1.1",
     "ewll/log-extra-data-bundle": "^1.0"
   },
   "autoload": {
