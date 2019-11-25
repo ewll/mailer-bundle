@@ -13,10 +13,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('ewll_mailer');
-
-        $rootNode
+        $treeBuilder = new TreeBuilder('ewll_mailer');
+        $treeBuilder->getRootNode()
             ->children()
             ->scalarNode('host')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('port')->isRequired()->cannotBeEmpty()->end()
