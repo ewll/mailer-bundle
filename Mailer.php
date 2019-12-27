@@ -2,7 +2,7 @@
 
 use Ewll\MailerBundle\Entity\Letter;
 use Ewll\MailerBundle\Exception\CannotSendLetterException;
-use Ewll\UserBundle\Entity\User;
+use App\Entity\User;
 use Ewll\MysqlMessageBrokerBundle\MessageBroker;
 use Ewll\DBBundle\Repository\RepositoryProvider;
 use PHPMailer\PHPMailer\Exception;
